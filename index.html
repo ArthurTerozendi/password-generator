@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Gerador de Senhas</h3>
+    <label for=""> Letras </label>
+    <input type="number" id="quantidadeLetra" value="0" >
+    <br>
+
+    <label for="">Simbolos</label>
+    <input type="number" id="quantidadeSimbolos" value="0" >
+    <br>
+
+    <label for=""> Numeros </label>
+    <input type="number" id="quantidadeNum" value="0" >
+    <br>
+
+    <button onclick="gerarSenha()"> Gerar Senha </button>
+    
+    <p style="visibility:hidden" id="senha">  </p>
+
+    <script src="script.js"></script>
+</body>
+</html>
