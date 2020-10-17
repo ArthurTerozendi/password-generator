@@ -18,10 +18,6 @@ function gerarSenha() {
     var senha = [];
     senha = senha.concat(simbSelecionados, letSelecionadas, numSelecionaodos, letMaiSelecionadas);
 
-    console.log(senha);
-    senha.sort();
-    console.log(senha);
-
     senha = getRandomArray(senha);
 
     var senhaString = "";
@@ -29,7 +25,6 @@ function gerarSenha() {
     for (let i = 0; i < senha.length; i++) {
         senhaString += senha[i] + "";
     }
-    console.log(senhaString);
     document.getElementById('senha').innerHTML = `<p style="visibility: visible"> ${senhaString} </p>`;
 }
 
@@ -79,7 +74,6 @@ function getRandomArrayInt(totNum) {
 function getRandomArray(array) {
     var numAlet = [];
     var tamanhoArray = array.length;
-    var valorTemp;
     while (tamanhoArray !== 0) {
         var rng = getRandomInt(array.length);
         var repetido = false;
@@ -98,7 +92,6 @@ function getRandomArray(array) {
     for (let i = 0; i < array.length; i++) {
         arrayTemp[i] = array[numAlet[i]];
     }
-    console.log(numAlet);
     return arrayTemp;
 }
 
