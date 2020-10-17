@@ -1,0 +1,32 @@
+.box {
+    background-color: rgba(0, 0, 0, 0.541);
+    border-radius: 5%;
+    width: 400px;
+    height: 350px;
+    background: rgba(3, 3, 3, 0.534);
+    color: whitesmoke;
+    padding: 10px;
+    font-family: 'Times New Roman', Times, serif;
+}
+body {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.541);
+    color: whitesmoke;
+}
+button {
+    margin-top: 10px;
+}
+input {
+    margin-top: 10px;
+}
+label {
+    margin-bottom: 20px;
+}
+p {
+    margin-top: 10px;
+    margin-left: 2px;
+}

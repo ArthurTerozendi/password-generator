@@ -1,19 +1,22 @@
 function gerarSenha() {
     var alfabeto = ['a', 'b' , 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    var alfabetoMai = [];
     var simbolos = ['!', '@', '#', '%', '&', '*', '$'];
     
     var simQuant = parseInt(document.getElementById("quantidadeSimbolos").value);
     var letQuant = parseInt(document.getElementById("quantidadeLetra").value);
     var numQuant = parseInt(document.getElementById("quantidadeNum").value);
+    var letMaiQuant = parseInt(document.getElementById("quantidadeLetrasMai").value);
 
     var tamSenha = parseInt(document.getElementById("tamanhoSenha"));
 
     var simbSelecionados = getRandomArraySimbol(simbolos, simQuant);
     var letSelecionadas = getRandomArrayLetras(alfabeto, letQuant);
     var numSelecionaodos = getRandomArrayInt(numQuant);
+    var letMaiSelecionadas = getRandomArrayLetrasMai(getAlfabetoMai(alfabeto, alfabetoMai), letMaiQuant);
     
     var senha = [];
-    senha = senha.concat(simbSelecionados, letSelecionadas, numSelecionaodos);
+    senha = senha.concat(simbSelecionados, letSelecionadas, numSelecionaodos, letMaiSelecionadas);
 
     console.log(senha);
     senha.sort();
@@ -55,6 +58,15 @@ function getRandomArrayLetras(alfa, totLetras) {
     return letSelect;
 }
 
+function getRandomArrayLetrasMai(alfaMai, totLetrasMai) {
+    var letSelect = [];
+
+    for (let i = 0; i < totLetrasMai; i++) {
+        letSelect[i] = alfaMai[getRandomInt(alfaMai.length)];
+    }
+    return letSelect;
+}
+
 function getRandomArrayInt(totNum) {
     var numSelect = [];
 
@@ -88,4 +100,12 @@ function getRandomArray(array) {
     }
     console.log(numAlet);
     return arrayTemp;
+}
+
+function getAlfabetoMai(alfabeto, alfabetoMai) {
+    for (let i = 0; i < alfabeto.length; i++) {
+        let alfaMai = alfabeto[i];
+        alfabetoMai[i] = alfaMai.toUpperCase();
+    }
+    return alfabetoMai;
 }
