@@ -1,3 +1,4 @@
+var senha = true;
 function gerarSenha() {
     var alfabeto = ['a', 'b' , 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     var alfabetoMai = [];
@@ -25,7 +26,6 @@ function gerarSenha() {
     for (let i = 0; i < senha.length; i++) {
         senhaString += senha[i] + "";
     }
-    document.getElementById('senha').innerHTML = `<p style="visibility: visible"> ${senhaString} </p>`;
 }
 
 function getRandomInt(max) {
@@ -101,4 +101,16 @@ function getAlfabetoMai(alfabeto, alfabetoMai) {
         alfabetoMai[i] = alfaMai.toUpperCase();
     }
     return alfabetoMai;
+}
+
+function toggleTypePassword (){
+    senha = !senha;
+    console.log(senha)
+    if (senha) {
+        document.getElementById('senhaAnagrama').style.visibility = "hidden";
+        document.getElementById('senhaPadrao').style.visibility = "visible";
+    } else {
+        document.getElementById('senhaAnagrama').style.visibility = "visible";
+        document.getElementById('senhaPadrao').style.visibility = "hidden";
+    }
 }
