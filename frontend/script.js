@@ -1,31 +1,36 @@
-var senha = true;
-function gerarSenha() {
-    var alfabeto = ['a', 'b' , 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-    var alfabetoMai = [];
-    var simbolos = ['!', '@', '#', '%', '&', '*', '$'];
-    
-    var simQuant = parseInt(document.getElementById("quantidadeSimbolos").value);
-    var letQuant = parseInt(document.getElementById("quantidadeLetra").value);
-    var numQuant = parseInt(document.getElementById("quantidadeNum").value);
-    var letMaiQuant = parseInt(document.getElementById("quantidadeLetrasMai").value);
+var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+var specialCharacters = ['!', '@', '#', '%', '&', '*', '$'];
 
-    var tamSenha = parseInt(document.getElementById("tamanhoSenha"));
+function generatePassword() {
+    var passwordLength = parseInt(document.getElementById("numberCharacter").value);
+    var uppercase = document.getElementById("uppercase").checked;
+    var number = document.getElementById("number").checked;
+    var specialCharacter = document.getElementById("specialCharacter").checked;
 
-    var simbSelecionados = getRandomArraySimbol(simbolos, simQuant);
-    var letSelecionadas = getRandomArrayLetras(alfabeto, letQuant);
-    var numSelecionaodos = getRandomArrayInt(numQuant);
-    var letMaiSelecionadas = getRandomArrayLetrasMai(getAlfabetoMai(alfabeto, alfabetoMai), letMaiQuant);
-    
-    var senha = [];
-    senha = senha.concat(simbSelecionados, letSelecionadas, numSelecionaodos, letMaiSelecionadas);
+    var numberOpt = getNumberOpt(specialCharacter, uppercase, number);
+    var ratio = numberOpt === 1 ? 0 : numberOpt === 2 ? 0.4 : numberOpt === 3 ? 0.3 : 0.2
+    var length = Math.round(passwordLength * ratio) == 0 ? 1 : Math.round(passwordLength * ratio);
 
-    senha = getRandomArray(senha);
+    var selectedSpecialCharacters = [];
+    var selectedNumbers = [];
+    var selectedUpperChars = [];
 
-    var senhaString = "";
+    if (specialCharacter) selectedSpecialCharacters = getRandomArraySimbol(length);
+    if (number) selectedNumbers = getRandomArrayInt(length);
+    if (uppercase) selectedUpperChars = getRandomArrayUpperCases(getAlphabetUppercase(), length);
+    var selectedChars = getRandomArrayChars(Math.round(passwordLength * (1 - ratio)));
 
-    for (let i = 0; i < senha.length; i++) {
-        senhaString += senha[i] + "";
-    }
+    var senha = selectedChars.concat(selectedSpecialCharacters, selectedNumbers, selectedUpperChars);
+
+    document.getElementById("resultPassword").value = getRandomArray(senha).join("");;
+}
+
+function getNumberOpt(specialCharacter, uppercase, number) {
+    var n = 1;
+    if (specialCharacter) n++;
+    if (uppercase) n++;
+    if (number) n++;
+    return n;
 }
 
 function getRandomInt(max) {
@@ -34,37 +39,32 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function getRandomArraySimbol(simbolos, totalSimbolos){
-    
+function getRandomArraySimbol(length) {
     var simbSelect = [];
-    for (var i = 0; i < totalSimbolos; i++){
-        simbSelect[i] = simbolos[getRandomInt(simbolos.length)];
+    for (var i = 0; i < length; i++) {
+        simbSelect[i] = specialCharacters[getRandomInt(specialCharacters.length)];
     }
     return simbSelect;
-
 }
 
-function getRandomArrayLetras(alfa, totLetras) {
-    var letSelect = [];
-
-    for (let i = 0; i < totLetras; i++) {
-        letSelect[i] = alfa[getRandomInt(alfa.length)];
+function getRandomArrayChars(length) {
+    var selectedChars = [];
+    for (let i = 0; i < length; i++) {
+        selectedChars[i] = alphabet[getRandomInt(alphabet.length)];
     }
-    return letSelect;
+    return selectedChars;
 }
 
-function getRandomArrayLetrasMai(alfaMai, totLetrasMai) {
-    var letSelect = [];
-
-    for (let i = 0; i < totLetrasMai; i++) {
-        letSelect[i] = alfaMai[getRandomInt(alfaMai.length)];
+function getRandomArrayUpperCases(alphabetUppercase, length) {
+    var selectedChars = [];
+    for (let i = 0; i < length; i++) {
+        selectedChars[i] = alphabetUppercase[getRandomInt(alphabetUppercase.length)];
     }
-    return letSelect;
+    return selectedChars;
 }
 
 function getRandomArrayInt(totNum) {
     var numSelect = [];
-
     for (let i = 0; i < totNum; i++) {
         numSelect[i] = getRandomInt(10).toString();
     }
@@ -77,8 +77,8 @@ function getRandomArray(array) {
     while (tamanhoArray !== 0) {
         var rng = getRandomInt(array.length);
         var repetido = false;
-        for (var i=0; i < array.length; i++) {
-            if(rng === numAlet[i]) {
+        for (var i = 0; i < array.length; i++) {
+            if (rng === numAlet[i]) {
                 repetido = true;
                 break;
             }
@@ -95,15 +95,11 @@ function getRandomArray(array) {
     return arrayTemp;
 }
 
-function getAlfabetoMai(alfabeto, alfabetoMai) {
-    for (let i = 0; i < alfabeto.length; i++) {
-        let alfaMai = alfabeto[i];
-        alfabetoMai[i] = alfaMai.toUpperCase();
-    }
-    return alfabetoMai;
+function getAlphabetUppercase() {
+    return alphabet.map(c => c.toUpperCase());
 }
 
-function toggleTypePassword (){
+function toggleTypePassword() {
     senha = !senha;
     console.log(senha)
     if (senha) {
