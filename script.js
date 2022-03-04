@@ -10,7 +10,7 @@ function generatePassword() {
     var numberOpt = getNumberOpt(specialCharacter, uppercase, number);
     var ratio = numberOpt === 1 ? 0 : numberOpt === 2 ? 0.4 : numberOpt === 3 ? 0.3 : 0.2
     var length = Math.round(passwordLength * ratio) == 0 ? 1 : Math.round(passwordLength * ratio);
-
+    var lengthChars = passwordLength - (length * (numberOpt - 1));
     var selectedSpecialCharacters = [];
     var selectedNumbers = [];
     var selectedUpperChars = [];
@@ -18,7 +18,7 @@ function generatePassword() {
     if (specialCharacter) selectedSpecialCharacters = getRandomArraySimbol(length);
     if (number) selectedNumbers = getRandomArrayInt(length);
     if (uppercase) selectedUpperChars = getRandomArrayUpperCases(getAlphabetUppercase(), length);
-    var selectedChars = getRandomArrayChars(Math.round(passwordLength * (1 - ratio)));
+    var selectedChars = getRandomArrayChars(lengthChars);
 
     var senha = selectedChars.concat(selectedSpecialCharacters, selectedNumbers, selectedUpperChars);
 
@@ -97,16 +97,4 @@ function getRandomArray(array) {
 
 function getAlphabetUppercase() {
     return alphabet.map(c => c.toUpperCase());
-}
-
-function toggleTypePassword() {
-    senha = !senha;
-    console.log(senha)
-    if (senha) {
-        document.getElementById('senhaAnagrama').style.visibility = "hidden";
-        document.getElementById('senhaPadrao').style.visibility = "visible";
-    } else {
-        document.getElementById('senhaAnagrama').style.visibility = "visible";
-        document.getElementById('senhaPadrao').style.visibility = "hidden";
-    }
 }
